@@ -36,7 +36,7 @@ app.get('/',(req,res) => {
 app.use('/api/users',usersRouter);
 app.use('/api/top', topRouter);
 app.use('/api/cables', cableR);
-app.use('/testpack', testPackR);
+app.use('/api/testpack', testPackR);
 
 
 app.listen(port,() => {
