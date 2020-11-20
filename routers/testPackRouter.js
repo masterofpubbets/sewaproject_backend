@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router;
+const router = express.Router();
 const sql = require('mssql');
 const auth = require('../middleware/auth');
 const sqlURL = process.env.TOP_SQLURL;
