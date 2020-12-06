@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const sql = require('mssql');
-const auth = require('../middleware/auth');
+const sql = require("mssql");
+const auth = require("../middleware/auth");
 const sqlURL = process.env.TOP_SQLURL;
 const sqlUser = process.env.TOP_SQLUSER;
 const sqlPass = process.env.TOP_SQLPASS;
@@ -18,29 +18,18 @@ const config = {
       }
 };
 
-router.get('/', (req, res) => {
-    res.status(200).send('You Are in Sql Server Mode cables')
+router.get("/", async (req, res) => {
+    return res.status(200).send("You Are in Sql Server Mode instruments");
 });
 
-router.post('/testpacktop', auth, async (req, res) => {
+router.post('/instrumenttop', auth, async (req, res) => {
     try {
         const pool = await sql.connect(config);
         const result = await pool.request()
         .input('top', sql.NVarChar(100), req.body.top)
-        .execute('sp_testPackTop')
+        .execute('sp_instrumentTop')
         return res.status(200).send(result.recordsets)
-    } catch (er) {
-        return res.status(400).send(er);
-    }
-});
-
-router.post('/testpack', auth, async (req, res) => {
-    try {
-        const pool = await sql.connect(config);
-        const result = await pool.request()
-        .execute('sp_getTestPack')
-        return res.status(200).send(result.recordsets)
-    } catch (er) {
+    } catch (er) { 
         return res.status(400).send(er);
     }
 });

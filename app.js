@@ -5,6 +5,9 @@ const usersRouter = require('./routers/usersR');
 const topRouter = require('./routers/topR');
 const cableR = require('./routers/cablesR');
 const testPackR = require('./routers/testPackRouter');
+const instRouter = require('./routers/instRouter');
+const equipmentRouter = require('./routers/equipmentRouter');
+const signalRouter = require('./routers/signalRouter');
 
 
 app.use(express.json());
@@ -37,6 +40,9 @@ app.use('/api/users',usersRouter);
 app.use('/api/top', topRouter);
 app.use('/api/cables', cableR);
 app.use('/api/testpack', testPackR);
+app.use('/api/instrument', instRouter);
+app.use('/api/equipment', equipmentRouter);
+app.use('/api/signal',signalRouter);
 
 
 app.listen(port,() => {

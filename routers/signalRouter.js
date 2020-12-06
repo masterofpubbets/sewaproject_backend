@@ -18,31 +18,20 @@ const config = {
       }
 };
 
-router.get('/', (req, res) => {
-    res.status(200).send('You Are in Sql Server Mode cables')
+router.get("/", async (req, res) => {
+    return res.status(200).send("You Are in Sql Server Mode signals");
 });
 
-router.post('/testpacktop', auth, async (req, res) => {
+router.post('/signaltop', auth, async (req, res) => {
     try {
         const pool = await sql.connect(config);
         const result = await pool.request()
         .input('top', sql.NVarChar(100), req.body.top)
-        .execute('sp_testPackTop')
+        .execute('sp_signalTop')
         return res.status(200).send(result.recordsets)
-    } catch (er) {
+    } catch(er) {
         return res.status(400).send(er);
     }
-});
-
-router.post('/testpack', auth, async (req, res) => {
-    try {
-        const pool = await sql.connect(config);
-        const result = await pool.request()
-        .execute('sp_getTestPack')
-        return res.status(200).send(result.recordsets)
-    } catch (er) {
-        return res.status(400).send(er);
-    }
-});
+})
 
 module.exports = router;
