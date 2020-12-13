@@ -34,11 +34,58 @@ router.post('/testpacktop', auth, async (req, res) => {
     }
 });
 
-router.post('/testpack', auth, async (req, res) => {
+router.get('/testpack', auth, async (req, res) => {
     try {
         const pool = await sql.connect(config);
         const result = await pool.request()
         .execute('sp_getTestPack')
+        return res.status(200).send(result.recordsets)
+    } catch (er) {
+        return res.status(400).send(er);
+    }
+});
+
+router.post('/testpack/details', auth, async (req, res) => {
+    try {
+        const pool = await sql.connect(config);
+        const result = await pool.request()
+        .input('tp', sql.NVarChar(100), req.body.tp)
+        .execute('sp_getTestPackDetails')
+        return res.status(200).send(result.recordsets)
+    } catch (er) {
+        return res.status(400).send(er);
+    }
+});
+
+router.post('/testpack/setrinst', auth, async (req, res) => {
+    try {
+        const pool = await sql.connect(config);
+        const result = await pool.request()
+        .input('ht', sql.NVarChar(100), req.body.tp)
+        .execute('sp_HT_setRinstName')
+        return res.status(200).send('updated')
+    } catch (er) {
+        return res.status(400).send(er);
+    }
+});
+
+router.post('/testpack/settested', auth, async (req, res) => {
+    try {
+        const pool = await sql.connect(config);
+        const result = await pool.request()
+        .input('ht', sql.NVarChar(100), req.body.tp)
+        .execute('sp_HT_setTestedName')
+        return res.status(200).send('updated')
+    } catch (er) {
+        return res.status(400).send(er);
+    }
+});
+
+router.get('/testpack/summary', auth, async (req, res) => {
+    try {
+        const pool = await sql.connect(config);
+        const result = await pool.request()
+        .execute('sp_tpSummary')
         return res.status(200).send(result.recordsets)
     } catch (er) {
         return res.status(400).send(er);
