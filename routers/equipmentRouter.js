@@ -32,6 +32,52 @@ router.post('/equipmenttop', auth, async (req, res) => {
     } catch(er) {
         return res.status(400).send(er);
     }
-})
+});
+
+router.get('/summary', auth, async (req, res) => {
+    try {
+        const pool = await sql.connect(config);
+        const result = await pool.request()
+        .execute('sp_eqSummaryByUnit')
+        return res.status(200).send(result.recordsets)
+    } catch(er) {
+        return res.status(400).send(er);
+    }
+});
+
+router.post('/detail', auth, async (req, res) => {
+    try {
+        const pool = await sql.connect(config);
+        const result = await pool.request()
+        .input('tag', sql.NVarChar(100), req.body.tag)
+        .execute('sp_getEqDetail')
+        return res.status(200).send(result.recordsets)
+    } catch(er) {
+        return res.status(400).send(er);
+    }
+});
+
+router.get('/list', auth, async (req, res) => {
+    try {
+        const pool = await sql.connect(config);
+        const result = await pool.request()
+        .execute('sp_getEqMini')
+        return res.status(200).send(result.recordsets)
+    } catch(er) {
+        return res.status(400).send(er);
+    }
+});
+
+router.post('/seterected', auth, async (req, res) => {
+    try {
+        const pool = await sql.connect(config);
+        const result = await pool.request()
+        .input('eq', sql.NVarChar(100), req.body.tag)
+        .execute('sp_EQ_setErectedName')
+        return res.status(200).send('updated')
+    } catch(er) {
+        return res.status(400).send(er);
+    }
+});
 
 module.exports = router;
