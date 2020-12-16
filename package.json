@@ -2,12 +2,7 @@
   "name": "top-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "node app.js",
-    "build": "node app.js"
-
-  },
+  "main": "app.js",
   "author": "Eslam ALy",
   "license": "ISC",
   "dependencies": {
