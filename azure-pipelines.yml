@@ -37,7 +37,8 @@ stages:
 
     - script: |
         npm install
-      displayName: 'npm install'
+        npm run build
+      displayName: 'npm install and Build'
       
     - task: ArchiveFiles@2
       displayName: 'Archive files'
@@ -73,4 +74,4 @@ stages:
               appName: $(webAppName)
               runtimeStack: 'NODE|10.10'
               package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
-              startUpCommand: 'node app.js'
+              startUpCommand: 'npm start'
