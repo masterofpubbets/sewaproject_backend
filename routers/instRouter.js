@@ -112,4 +112,38 @@ router.post('/detail', auth, async (req, res) => {
     }
 });
 
+router.post('/setcalibrated', auth, async (req, res) => {
+    try {
+        const pool = await sql.connect(config);
+        const result = await pool.request()
+        .input('tag', sql.NVarChar(100), req.body.tag)
+        .execute('sp_INS_setCalibratedName')
+        return res.status(200).send('updated')
+    } catch (er) { 
+        return res.status(400).send(er);
+    }
+});
+router.post('/setinstalled', auth, async (req, res) => {
+    try {
+        const pool = await sql.connect(config);
+        const result = await pool.request()
+        .input('tag', sql.NVarChar(100), req.body.tag)
+        .execute('sp_INS_setInstalledName')
+        return res.status(200).send('updated')
+    } catch (er) { 
+        return res.status(400).send(er);
+    }
+});
+router.post('/sethookup', auth, async (req, res) => {
+    try {
+        const pool = await sql.connect(config);
+        const result = await pool.request()
+        .input('tag', sql.NVarChar(100), req.body.tag)
+        .execute('sp_INS_setHookupName')
+        return res.status(200).send('updated')
+    } catch (er) { 
+        return res.status(400).send(er);
+    }
+});
+
 module.exports = router;

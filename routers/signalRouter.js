@@ -32,6 +32,59 @@ router.post('/signaltop', auth, async (req, res) => {
     } catch(er) {
         return res.status(400).send(er);
     }
-})
+});
+
+router.get('/summarymini', auth, async (req, res) => {
+    try {
+        const pool = await sql.connect(config);
+        const result = await pool.request()
+        .execute('sp_LoopSummaryMini')
+        return res.status(200).send(result.recordsets)
+    } catch(er) {
+        return res.status(400).send(er);
+    }
+});
+router.get('/summary', auth, async (req, res) => {
+    try {
+        const pool = await sql.connect(config);
+        const result = await pool.request()
+        .execute('sp_LoopSummary')
+        return res.status(200).send(result.recordsets)
+    } catch(er) {
+        return res.status(400).send(er);
+    }
+});
+router.get('/list', auth, async (req, res) => {
+    try {
+        const pool = await sql.connect(config);
+        const result = await pool.request()
+        .execute('sp_signalList')
+        return res.status(200).send(result.recordsets)
+    } catch(er) {
+        return res.status(400).send(er);
+    }
+});
+router.post('/details', auth, async (req, res) => {
+    try {
+        const pool = await sql.connect(config);
+        const result = await pool.request()
+        .input('tag', sql.NVarChar(100), req.body.tag)
+        .execute('sp_signalDetails')
+        return res.status(200).send(result.recordsets)
+    } catch(er) {
+        return res.status(400).send(er);
+    }
+});
+router.post('/setdone', auth, async (req, res) => {
+    try {
+        const pool = await sql.connect(config);
+        const result = await pool.request()
+        .input('tag', sql.NVarChar(100), req.body.tag)
+        .execute('sp_signalSetDone')
+        return res.status(200).send('updated')
+    } catch(er) {
+        return res.status(400).send(er);
+    }
+});
 
 module.exports = router;
