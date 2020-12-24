@@ -86,5 +86,15 @@ router.post('/setdone', auth, async (req, res) => {
         return res.status(400).send(er);
     }
 });
+router.get('/listmini', auth, async (req, res) => {
+    try {
+        const pool = await sql.connect(config);
+        const result = await pool.request()
+        .execute('sp_signalListMini')
+        return res.status(200).send(result.recordsets)
+    } catch(er) {
+        return res.status(400).send(er);
+    }
+});
 
 module.exports = router;
