@@ -1,0 +1,2 @@
+run docker
+ docker run -p 80:5000 --rm --env-file envVariables.txt trtopsewabe.azurecr.io/sewa-backend
