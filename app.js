@@ -33,7 +33,7 @@ app.use(function (req, res, next) {
 });
 
 app.get('/',(req,res) => {
-    res.status(200).send('YOU ARE IN THE ROOT');
+    res.status(200).send('YOU ARE IN THE ROOT baby');
 });
 
 app.use('/api/users',usersRouter);
