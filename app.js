@@ -8,6 +8,7 @@ const testPackR = require('./routers/testPackRouter');
 const instRouter = require('./routers/instRouter');
 const equipmentRouter = require('./routers/equipmentRouter');
 const signalRouter = require('./routers/signalRouter');
+const message = require('./routers/message');
 
 
 app.use(express.json());
@@ -43,7 +44,7 @@ app.use('/api/testpack', testPackR);
 app.use('/api/instrument', instRouter);
 app.use('/api/equipment', equipmentRouter);
 app.use('/api/signal',signalRouter);
-
+app.use('/api/msg', message);
 
 app.listen(port,() => {
     console.log('start listening on port ' + port);

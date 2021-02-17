@@ -21,7 +21,7 @@ isConnected = mongoConProm.then(() => {
 });
 
 
-router.post('/', auth, async (req,res) => {
+router.post('/', async (req,res) => {
     if (!isConnected) {
         res.status(401).send('Server is offline');
     } else {

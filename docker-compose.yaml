@@ -1,0 +1,17 @@
+version: "3.8"
+services: 
+  sewa-backend:
+    image: "masterofpubbets/sewa-backend"
+    container_name: "sewa-backend"
+    env_file: 
+      - ./envVariables.txt
+    networks:
+      - host-net
+      - mongodb-net
+    ports:
+      - "3001:3001"
+networks: 
+  host-net:
+    driver: bridge
+  mongodb-net:
+    external: true
