@@ -61,7 +61,7 @@ router.post('/login', async (req,res) => {
     if (!validate) {
         res.status(400).send('wrong user name or password');
     } else {
-        res.header('x-auth-token',validate.token).status(200).send(validate);
+        res.header('x-auth-token',validate.token).status(200).send({...validate, token: validate.token});
     };
 });
 

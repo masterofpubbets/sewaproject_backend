@@ -6,6 +6,7 @@ const sqlURL = process.env.TOP_SQLURL;
 const sqlUser = process.env.TOP_SQLUSER;
 const sqlPass = process.env.TOP_SQLPASS;
 const sqlDb = process.env.TOP_DB;
+const cable = require('../items/cables/cable');
 
 const config = {
     user: sqlUser,
@@ -99,6 +100,43 @@ router.post("/detail", auth, async (req, res) => {
         .input('tag', sql.NVarChar(100), req.body.tag)
         .execute('sp_getCableDetails')
         return res.status(200).send(result.recordsets)
+    } catch (er) {
+        return res.status(400).send(er);
+    }
+});
+
+router.post("/clearproductiontemp", auth, async (req, res) => {
+    try {
+        const pool = await sql.connect(config);
+        const result = await pool.request()
+        .input('userName', sql.NVarChar(50), req.body.userName)
+        .execute('sp_clearCableTempProduction')
+        return res.status(200).send('cleared')
+    } catch (er) {
+        return res.status(400).send(er);
+    }
+});
+
+router.post("/addproductiontemp", async (req, res) => {
+    try {
+        let updateStatus = false
+        const pulledCables = req.body.filter(c => c.step === 'Pulled Date')
+        const conFromCables = req.body.filter(c => c.step === 'Con From Date')
+        const conToCables = req.body.filter(c => c.step === 'Con To Date')
+        const testedCables = req.body.filter(c => c.step === 'Test Date')
+        pulledCables.forEach(async c => {
+            updateStatus = await cable.updateCablePulling(c)
+        })
+        conFromCables.forEach(async c => {
+            updateStatus = await cable.updateCableConFrom(c)
+        })
+        conToCables.forEach(async c => {
+            updateStatus = await cable.updateCableConTo(c)
+        })
+        testedCables.forEach(async c => {
+            updateStatus = await cable.updateCableTest(c)
+        })
+        return res.status(200).send('Production has been added to temp cable production')
     } catch (er) {
         return res.status(400).send(er);
     }
