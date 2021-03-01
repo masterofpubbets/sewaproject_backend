@@ -54,8 +54,8 @@ async function userLogin(userData) {
             return false;
         } else {
             const token = jwt.sign({_id: result[0]._id, fullName: result[0].fullName, userType: result[0].userType}, privateKey);
-            result.token = token
-            return result;
+            result[0].token = token
+            return result[0];
         }
     }
 };
