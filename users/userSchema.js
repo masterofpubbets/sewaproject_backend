@@ -35,7 +35,7 @@ async function changePassword(userData) {
         const query = {userName: userData.userName};
         const newPassword = {$set: {password: await hashPassword.hash(userData.newPassword)}};
         const result = await User.updateOne(query,newPassword);
-        return result;
+        return true;
     } catch(ex) {
         return false;
     }

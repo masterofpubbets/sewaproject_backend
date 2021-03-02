@@ -80,14 +80,13 @@ router.delete('/', auth, async (req,res) => {
 });
 
 router.post('/changepassword', auth, async(req, res) => {
-    const result = await users.changePassword(reg.body);
     try {
-        
+        const result = await users.changePassword(req.body);
         if (result === true) {
             return res.status(200).send('updated')
         }
     } catch(ex) {
-        return res.status(400).send(result)
+        return res.status(400).send(ex)
     }
 })
 
