@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
-const logs = require('../logs/logs');
+const log = require('../logs/logs');
 
 router.get('/', (req, res) => {
     return(res.status(200).send(' YOU ARE IN LOGS ROOT'))
@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
 
 router.post('/userlogin', auth, async (req, res) => {
     try {
-        const result = await logs.saveUserLogin(req)
+        const result = await log.saveUserLogin(req.body)
         if (result === true) {
             return(res.status(200).send('looged'))
         } else {

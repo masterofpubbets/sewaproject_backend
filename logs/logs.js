@@ -25,11 +25,11 @@ async function saveUserLogin(user) {
         .input('loginAs', sql.NVarChar(50), user.loginAs)
         .execute('sp_addLogginLog')
         return true
-    } catch(er) {
+    } catch(ex) {
         return false
     }
 };
 
-module.export = {
+module.exports = {
     saveUserLogin: saveUserLogin
 };

@@ -30,6 +30,17 @@ async function addUser(userData) {
     return await user.save();
 };
 
+async function changePassword(userData) {
+    try {
+        const query = {userName: userData.userName};
+        const newPassword = {$set: {password: await hashPassword.hash(userData.newPassword)}};
+        const result = await User.updateOne(query,newPassword);
+        return true;
+    } catch(ex) {
+        return false;
+    }
+};
+
 async function isUserExists(userData) {
     let result = await User.find({userName: userData.userName}).select({_id: 1});
     if (result.length === 0) {
@@ -75,5 +86,6 @@ module.exports = {
     isUserExists: isUserExists,
     userLogin: userLogin,
     getUsers: getUsers,
-    deleteUser: deleteUser
+    deleteUser: deleteUser,
+    changePassword: changePassword
 }

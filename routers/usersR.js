@@ -77,8 +77,18 @@ router.delete('/', auth, async (req,res) => {
     } catch(err) {
         res.status(400).send(err)
     }
-
 });
+
+router.post('/changepassword', auth, async(req, res) => {
+    try {
+        const result = await users.changePassword(reg.body);
+        if (result === true) {
+            return res.status(200).send
+        }
+    } catch(ex) {
+        return res.status(400).send('not updated')
+    }
+})
 
 
 module.exports = router;
