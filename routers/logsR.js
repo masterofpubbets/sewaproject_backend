@@ -8,11 +8,15 @@ router.get('/', (req, res) => {
 });
 
 router.post('/userlogin', auth, async (req, res) => {
-    const result = await logs.saveUserLogin(req)
-    if (result === true) {
-        return(res.status(200).send('looged'))
-    } else {
-        return(res.status(400).send('not looged'))
+    try {
+        const result = await logs.saveUserLogin(req)
+        if (result === true) {
+            return(res.status(200).send('looged'))
+        } else {
+            return(res.status(400).send('not looged'))
+        }
+    } catch(er) {
+        return(res.status(401).send(er));
     }
 });
 
