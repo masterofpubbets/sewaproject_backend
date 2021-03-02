@@ -83,10 +83,10 @@ router.post('/changepassword', auth, async(req, res) => {
     try {
         const result = await users.changePassword(reg.body);
         if (result === true) {
-            return res.status(200).send
+            return res.status(200).send('updated')
         }
     } catch(ex) {
-        return res.status(400).send('not updated')
+        return res.status(400).send(ex)
     }
 })
 
