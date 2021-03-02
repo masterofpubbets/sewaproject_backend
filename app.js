@@ -8,6 +8,7 @@ const testPackR = require('./routers/testPackRouter');
 const instRouter = require('./routers/instRouter');
 const equipmentRouter = require('./routers/equipmentRouter');
 const signalRouter = require('./routers/signalRouter');
+const logsR = require('./routers/logsR');
 const message = require('./routers/message');
 
 
@@ -45,6 +46,7 @@ app.use('/api/instrument', instRouter);
 app.use('/api/equipment', equipmentRouter);
 app.use('/api/signal',signalRouter);
 app.use('/api/msg', message);
+app.use('/api/logs', logsR);
 
 app.listen(port,() => {
     console.log('start listening on port ' + port);
